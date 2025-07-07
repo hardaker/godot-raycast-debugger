@@ -11,6 +11,12 @@ draws green lines from the ray source to destination for every ray cast since th
 last time the screen was rendered.  If the ray produces a collision, then a second
 red line will be drawn from source to the target that got hit.
 
+See the screenshot of detection from multiple objects, where the green
+lines indicate the rays projected and the red lines show the
+collisions detected.
+
+![Screenshot with raycast debugging enabled](./images/example2.png)
+
 # Usage
 
 1. Copy the raycast_debugger.gd script to your project's source code.
