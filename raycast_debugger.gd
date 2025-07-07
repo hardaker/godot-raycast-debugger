@@ -86,7 +86,7 @@ func intersect_ray(
 			cast_line = create_line()
 			cast_lines.append(cast_line)
 
-			hit_line = create_line()
+			hit_line = create_line(LineType.HIT_LINE)
 			hit_lines.append(hit_line)
 		else:
 			# Use a previously cached version of the related Line2D
