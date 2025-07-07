@@ -15,14 +15,40 @@ red line will be drawn from source to the target that got hit.
 
 1. Copy the raycast_debugger.gd script to your project's source code.
 
-2. Initialize the class as a child of the class you want to draw:
+2. Initialize the class as a child of the class you want to draw
+   inside whatever object you are casting from.  Set the
+   `enableDebugging` flag to `true` in order to turn on the graphical display.
 
-3. use the `.test_collision(source, dest, ignore_objects)` API for casting a ray,
+``` gdscript
+var castdebugger: RayCastDebugger2D
+
+func _ready() -> void:
+    # ...
+	castdebugger = RayCastDebugger2D.new()
+	castdebugger.enableDebugging = true
+	add_child(castdebugger)
+    # ...
+
+```
+
+3. use the `.intersect_ray(source, dest, ignore_objects)` API for casting a ray,
 which will return a collision object or `none`.
 
-4. Set the object's `enableDebugging` flag to `true` to have the screen light up with
-cast and detection rays.
+``` gdscript
+func _physics_process(delta: float) -> void:
+    Vector2 from_location = global_position
+    Vector2 to_the_right = global_position + Vector2(200, 0)
+
+    # ...
+    var result = castdebugger.intersect_ray(from_location, to_the_right, [self])
+    if result:
+        # handle collisions the way you normally would
+    # ...
+```
+
+4. If you've solved all your debugging issues, you can set the
+`enableDebugging` flag to `false` to turn off the visual raycast lines.
 
 # Example video
 
-TBD
+TBD -- coming soon
