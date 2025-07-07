@@ -12,8 +12,13 @@ extends RigidBody2D
 ## use raycasting.  Some options are available below in the
 ## intersect_ray() call, but only limited options.
 
+## Enable visual debugging cast and collision lines.
 @export var enableDebugging: bool = false
+
+## The color of the raycast line.
 @export var cast_color: Color = Color.GREEN
+
+## The color of the line that is displayed upon a detected collision.
 @export var hit_color: Color = Color.RED
 
 var the_world_state: PhysicsDirectSpaceState2D = null
@@ -21,9 +26,6 @@ var the_world_state: PhysicsDirectSpaceState2D = null
 var cast_lines: Array[Line2D] = []
 var hit_lines: Array[Line2D] = []
 var line_count: int = 0
-
-var last_from = null
-var last_to = null
 
 enum LineType { PROJECTION, HIT_LINE };
 
@@ -94,7 +96,7 @@ func intersect_ray(
 		# set the (GREEN) line vector coordinates
 		cast_line.visible = true
 		cast_line.global_position = Vector2(0, 0)
-		cast_line.points = PackedVector2Array([from, last_to])
+		cast_line.points = PackedVector2Array([from, to])
 
 		if collision_result:
 			# if a collision was detected, set the collision (RED)
