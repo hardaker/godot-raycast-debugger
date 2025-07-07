@@ -1,5 +1,16 @@
 class_name RayCastDebugger2D
 extends RigidBody2D
+## A class for debugging 2D raycast usage and problems
+##
+## This class can be used to initiate 2D raycasts that will
+## return the collision object from a intersect_ray() result,
+## along with optionally displaying a green line on the screen
+## showing the ray path, along with a thinner red line when
+## a collision is detected.  This code is MIT licensed so you
+## may reuse it fairly freely (see the LICENSE file for details).
+## You will likely need to modify it to suit how you specifically
+## use raycasting.  Some options are available below in the
+## intersect_ray() call, but only limited options.
 
 @export var enableDebugging: bool = false
 @export var cast_color: Color = Color.GREEN
@@ -43,51 +54,63 @@ func intersect_ray(
 		):
 	"""Test a collision from a starting to ending vector and memorize the ray."""
 
+	# If this is the first call since a screen reset,
+	# turn off visibilty for all past lines
 	if line_count == 0:
 		for i in range(len(cast_lines)):
 			cast_lines[i].visible = false
 			hit_lines[i].visible = false
 
+	# get our world space state and set up our ray query
 	var world_state = get_world_2d().direct_space_state
 	var query = PhysicsRayQueryParameters2D.create(from, to)
 	query.exclude = exclude
 	query.collide_with_areas = collide_with_areas
 
-	var result = world_state.intersect_ray(query)
+	# perform the actually raycast
+	var collision_result = world_state.intersect_ray(query)
 
+	# when debugging is enabled, draw the related lines on the screen
 	if enableDebugging:
 		visible = true
 
 		# draw the cast line
 		var cast_line: Line2D
 		var hit_line: Line2D
+
 		if len(cast_lines) <= line_count:
-			print("growing: " + str(line_count))
-			# add a new line to the cast_lines array
+			# If this is a new cast without a related past Line2D,
+			# create and store a new one for reuse in future raycasts.
 			cast_line = create_line()
 			cast_lines.append(cast_line)
+
 			hit_line = create_line()
 			hit_lines.append(hit_line)
 		else:
+			# Use a previously cached version of the related Line2D
 			cast_line = cast_lines[line_count]
 			hit_line = hit_lines[line_count]
 			
+		# set the (GREEN) line vector coordinates
 		cast_line.visible = true
 		cast_line.global_position = Vector2(0, 0)
 		cast_line.points = PackedVector2Array([from, last_to])
 
-		if result:
-			print("hit something: " + str(result.collider))
+		if collision_result:
+			# if a collision was detected, set the collision (RED)
+			# line coordinates
 			hit_line.global_position = Vector2(0, 0)
-			hit_line.points = PackedVector2Array([from, result.position])
+			hit_line.points = PackedVector2Array([from, collision_result.position])
 			hit_line.visible = true
 		else:
-			# print("hit nothing")
+			# if the raycast did not collide, turn off the collision line 
 			hit_line.visible = false
 
 		line_count += 1
 
 	else:
+		# when not debugging, turn off our visibility entirely
 		visible = false
 
-	return result
+	# return the results of the raycast itself
+	return collision_result
