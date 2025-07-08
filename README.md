@@ -15,7 +15,7 @@ See the screenshot of detection from multiple objects, where the green
 lines indicate the rays projected and the red lines show the
 collisions detected.
 
-![Screenshot with raycast debugging enabled](./images/example2.png)
+![Screenshot with raycast debugging enabled](./images/example2-annotated.png)
 
 # Usage
 
