@@ -55,6 +55,19 @@ func _physics_process(delta: float) -> void:
 4. If you've solved all your debugging issues, you can set the
 `enableDebugging` flag to `false` to turn off the visual raycast lines.
 
+# Still TODO
+
+Right now this is useful for raycast debugging when doing raycasting
+directly in code (which I think is more common).  What is not done yet
+is an implementation based on the RayCast2D object, nor is an
+implementation of anything in 3D yet.
+
+TL;DR:
+
+- An implementation based on the RayCast2D object
+- An implementation based on the RayCast3D object
+- An implementation based on direct coding in 3D
+
 # Example video
 
 TBD -- coming soon
