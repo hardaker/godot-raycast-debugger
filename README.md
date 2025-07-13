@@ -70,4 +70,6 @@ TL;DR:
 
 # Example video
 
-TBD -- coming soon
+Watch the [tutorial and demonstration video](https://youtu.be/3Yex3HdTaVk)
+
+
