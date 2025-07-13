@@ -96,12 +96,14 @@ func intersect_ray(
 		# set the (GREEN) line vector coordinates
 		cast_line.visible = true
 		cast_line.global_position = Vector2(0, 0)
+		cast_line.global_rotation = 0.0
 		cast_line.points = PackedVector2Array([from, to])
 
 		if collision_result:
 			# if a collision was detected, set the collision (RED)
 			# line coordinates
 			hit_line.global_position = Vector2(0, 0)
+			hit_line.global_rotation = 0.0
 			hit_line.points = PackedVector2Array([from, collision_result.position])
 			hit_line.visible = true
 		else:
